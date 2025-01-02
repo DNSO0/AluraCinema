@@ -3,6 +3,8 @@ import Cabecera from "../../components/Cabecera/Cabecera";
 import Pie from "../../components/Pie";
 import Titulo from "../../components/Titulo";
 import Card from "../../components/Card";
+import styles from "./index.module.css";
+import videos from "../../data/db.json"
  
 function Inicio(){
     return(
@@ -12,9 +14,13 @@ function Inicio(){
             <Titulo>
                 <h1>Un lugar para guardar sus videos favoritos</h1>
             </Titulo>
-            <Card id="1" titulo="Gato" capa="https://api.thecatapi.com/api/images/get?format=src&ype=png"/>
+            <section className={styles.container}>
+            {videos.map((video) => {
+          return <Card {...video} key={video.id} />;
+        })}
+            </section>
             <Pie />
-        </>
+       </>
     )
 }
 export default Inicio;
