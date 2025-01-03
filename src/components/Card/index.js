@@ -1,20 +1,27 @@
-import { useFavoritosContext } from "../../Contexto/Favoritos"
-import styles from "./Card.module.css"
-import iconFavorito from "./iconFavorito.png"
-import iconNoFavorito from "./iconNoFavorito.png"
+import { Link } from "react-router-dom";
+import { useFavoritosContext } from "../../Contexto/Favoritos";
+import styles from "./Card.module.css";
+import iconFavorito from "./iconFavorito.png";
+import iconNoFavorito from "./iconNoFavorito.png";
 
-function Card({id, capa, titulo}){
+function Card({ id, capa, titulo }) {
+  const { favorito, agregarFavorito } = useFavoritosContext();
+  const isFavorito = favorito.some((fav) => fav.id === id);
+  const icon = isFavorito ? iconFavorito : iconNoFavorito;
 
-    const {favorito, agregarFavorito} = useFavoritosContext()
-    const isFavorito = favorito.some(fav=> fav.id === id)
-    const icon = isFavorito ? iconFavorito : iconNoFavorito
-
-    return (
-        <div className={styles.container}>
-            <img src={capa} alt={titulo} className={styles.capa}/>
+  return (
+    <div className={styles.container}>
+      <Link className={styles.link} to={`/${id}`}>
+        <img src={capa} alt={titulo} className={styles.capa} />
         <h2>{titulo}</h2>
-        <img src={icon} alt="Icono favorito" className={styles.favorito} onClick={()=> agregarFavorito({id, titulo, capa})}/>
-        </div>
-    )
+      </Link>
+      <img
+        src={icon}
+        alt="Icono favorito"
+        className={styles.favorito}
+        onClick={() => agregarFavorito({ id, titulo, capa })}
+      />
+    </div>
+  );
 }
-export default Card
+export default Card;
